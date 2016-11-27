@@ -16,6 +16,8 @@
         $scope.cards = [];
         $scope.members = []
         $scope.cardsHelp = [];
+        $scope.memberSelected = '';
+        $scope.listSelected = '';
         Trello.authorize({
             type: 'popup',
             name: 'wsnteam',
@@ -33,7 +35,7 @@
         $scope.boards = [];
 
         $scope.getBoards = function(){
-
+            refreshScopes();
             TrelloService.getOrganizations(Trello.token()).then(function(organizations){
                 console.log(organizations.data);
                 
@@ -52,18 +54,46 @@
         }
 
         $scope.getCards = function(boardId){
+            refreshScopes();
             TrelloService.getCards(Trello.token(), boardId).then(function(data){
                 console.log(data.data);
                 $scope.cards = data.data;
                 $scope.cardsHelp = data.data;
             });
+
+            TrelloService.getLists(Trello.token(), boardId).then(function(lists){
+                console.log(lists.data);
+                $scope.lists = lists.data;
+            });
         }
 
-        $scope.setMemberCards = function(memberId){
+        $scope.setMember = function(member){
+            $scope.memberSelected = member;
+            filterCards();
+        }
+
+        $scope.setList = function(list){
+            $scope.listSelected = list;
+            filterCards();
+        }
+
+        function filterCards(){
             $scope.cards = $scope.cardsHelp;
-            $scope.cards = $scope.cards.filter(function(n){
-                return n.idMembers.includes(memberId);
-            })
+            if ($scope.memberSelected !== '') {                
+                $scope.cards = $scope.cards.filter(function(n){
+                    return n.idMembers.includes($scope.memberSelected.id);
+                })
+            }
+            if ($scope.listSelected !== '') {                
+                $scope.cards = $scope.cards.filter(function(n){
+                    return n.idList.includes($scope.listSelected.id);
+                })
+            }
+        }
+
+        function refreshScopes(){
+            $scope.memberSelected = '';
+            $scope.listSelected = '';
         }
     }]);
 })();
