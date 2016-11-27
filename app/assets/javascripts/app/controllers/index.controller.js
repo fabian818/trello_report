@@ -58,7 +58,7 @@
             });
         }
 
-        $scope.getBoards = function(){
+        $scope.getAllBoards = function(){
             refreshScopes();
             refreshData();
             TrelloService.getAllBoards(Trello.token()).then(function(boards){
@@ -116,9 +116,10 @@
         }
 
         function refreshData(){
-            $scope.boards = '';
-            $scope.members = '';
-            $scope.lists = '';
+            $scope.boards = [];
+            $scope.members = [];
+            $scope.lists = [];
+            $scope.organizations = [];
         }
     }]);
 })();

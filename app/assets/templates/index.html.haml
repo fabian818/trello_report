@@ -1,13 +1,13 @@
 %h1 TrelloReport - By NoFearCode
 %button{'ng-click' => 'getOrganizations()'} Get Organizations
+%button{'ng-click' => 'getAllBoards()'} No organizations? Get Boards where i'm a member
+%h3{'ng-if' => 'organizations.length > 0'}
+  Organizations
 %ol
   %li{'ng-repeat' => 'organization in organizations'}
     %a{'href' => '{{organization.url}}', 'target' => "_blank"}
       {{organization.name}}
     %button{'ng-click' => 'getBoards(organization.id)'} Get Boards
-
-
-%button{'ng-click' => 'getBoards()'} No organizations? Get Boards where i'm a member
 
 %h3{'ng-if' => 'boards.length > 0'}
   Boards
