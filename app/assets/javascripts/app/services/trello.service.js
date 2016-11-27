@@ -9,7 +9,9 @@
     function TrelloService($http, localStorageService) {
         var service = {};
         service.getBoards = getBoards;
+        service.getMembers = getMembers;
         service.getOrganizations = getOrganizations;
+        service.getCards = getCards;
 
         return service;
 
@@ -22,8 +24,8 @@
             })
         }
 
-        function getMember(token) {
-            return $http.get('https://api.trello.com/1/members/me', {
+        function getMembers(token, id) {
+            return $http.get('https://api.trello.com/1/organizations/' + id + '/members', {
                 params: {
                     token: token,
                     key: '28d1e5f62a4049c216bee203b0fcd1c2'
@@ -40,9 +42,12 @@
             })
         }
 
-        function like(idea_id) {
-            return $http.post('/api/likes/create', {
-                idea_id: idea_id
+        function getCards(token, id) {
+            return $http.get('https://api.trello.com/1/boards/' + id + '/cards', {
+                params: {
+                    token: token,
+                    key: '28d1e5f62a4049c216bee203b0fcd1c2'
+                }
             })
         }
 

@@ -1,2 +1,20 @@
 %h1 Hola trello
 %button{'ng-click' => 'getBoards()'} Get Boards
+%ol
+  %li{'ng-repeat' => 'board in boards'}
+    %a{'href' => '{{board.url}}', 'target' => "_blank"}
+      {{board.name}}
+    %button{'ng-click' => 'getCards(board.id)'} Get Cards
+
+%h3
+  Members
+%ol
+  %li{'ng-repeat' => 'member in members'}
+    {{member.fullName}} - {{member.username}}
+    %button{'ng-click' => 'setMemberCards(member.id)'} SetMember
+
+%h3{'ng-if' => 'cards.length > 0'}
+  Cards
+%ol
+  %li{'ng-repeat' => 'card in cards'}
+    {{card.name}}
