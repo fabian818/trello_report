@@ -12,6 +12,7 @@
         service.getMembers = getMembers;
         service.getOrganizations = getOrganizations;
         service.getCards = getCards;
+        service.getLists = getLists;
 
         return service;
 
@@ -44,6 +45,15 @@
 
         function getCards(token, id) {
             return $http.get('https://api.trello.com/1/boards/' + id + '/cards', {
+                params: {
+                    token: token,
+                    key: '28d1e5f62a4049c216bee203b0fcd1c2'
+                }
+            })
+        }
+
+        function getLists(token, id) {
+            return $http.get('https://api.trello.com/1/boards/' + id + '/lists', {
                 params: {
                     token: token,
                     key: '28d1e5f62a4049c216bee203b0fcd1c2'

@@ -11,7 +11,14 @@
 %ol
   %li{'ng-repeat' => 'member in members'}
     {{member.fullName}} - {{member.username}}
-    %button{'ng-click' => 'setMemberCards(member.id)'} SetMember
+    %button{'ng-click' => 'setMember(member.id)'} SetMember
+
+%h3
+  Lists
+%ol
+  %li{'ng-repeat' => 'list in lists'}
+    {{list.name}} - {{list.id}}
+    %button{'ng-click' => 'setList(list.id)'} SetList
 
 %h3{'ng-if' => 'cards.length > 0'}
   Cards
