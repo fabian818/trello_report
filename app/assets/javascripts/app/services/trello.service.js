@@ -16,8 +16,8 @@
 
         return service;
 
-        function getBoards(token) {
-            return $http.get('https://api.trello.com/1/members/me/boards', {
+        function getBoards(token, id) {
+            return $http.get('https://api.trello.com/1/organizations/' + id + '/boards', {
                 params: {
                     token: token,                    
                     key: '28d1e5f62a4049c216bee203b0fcd1c2'

@@ -1,5 +1,13 @@
-%h1 Hola trello
-%button{'ng-click' => 'getBoards()'} Get Boards
+%h1 Reportes trello
+%button{'ng-click' => 'getOrganizations()'} Get Organizations
+%ol
+  %li{'ng-repeat' => 'organization in organizations'}
+    %a{'href' => '{{organization.url}}', 'target' => "_blank"}
+      {{organization.name}}
+    %button{'ng-click' => 'getBoards(organization.id)'} Get Boards
+
+%h3{'ng-if' => 'boards.length > 0'}
+  Boards
 %ol
   %li{'ng-repeat' => 'board in boards'}
     %a{'href' => '{{board.url}}', 'target' => "_blank"}
