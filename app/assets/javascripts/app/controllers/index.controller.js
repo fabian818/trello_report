@@ -12,6 +12,7 @@
     }
 
     angular.module('myApp').controller('IndexController', ['$scope', 'TrelloService', function ($scope, TrelloService) {
+        $scope.organizations = [];
         $scope.boards = [];
         $scope.cards = [];
         $scope.members = []
@@ -32,25 +33,28 @@
                     console.log('Usuario falló');
                 }
             });
-        $scope.boards = [];
 
-        $scope.getBoards = function(){
+        $scope.getOrganizations = function(){
             refreshScopes();
             TrelloService.getOrganizations(Trello.token()).then(function(organizations){
+                $scope.boards = [];
+                console.log('organizations')
                 console.log(organizations.data);
-                
-                var idOrganization =  organizations.data[1].id;
-                console.log(idOrganization);
-                TrelloService.getBoards(Trello.token()).then(function(boards){
-                    console.log(boards.data.filter(function(n){return n.idOrganization === idOrganization}));
-                    $scope.boards = boards.data.filter(function(n){return n.idOrganization === idOrganization});
-                });
-                TrelloService.getMembers(Trello.token(), idOrganization).then(function(members){
-                    console.log(members.data);
-                    $scope.members = members.data;
-                });
-            });            
-            
+                $scope.organizations = organizations.data;
+            });
+        }
+
+        $scope.getBoards = function(organizationId){
+            refreshScopes();
+            TrelloService.getBoards(Trello.token(), organizationId).then(function(boards){
+                console.log(boards.data.filter(function(n){return n.idOrganization === organizationId}));
+                $scope.boards = boards.data.filter(function(n){return n.idOrganization === organizationId});
+            });
+
+            TrelloService.getMembers(Trello.token(), organizationId).then(function(members){
+                console.log(members.data);
+                $scope.members = members.data;
+            });
         }
 
         $scope.getCards = function(boardId){
