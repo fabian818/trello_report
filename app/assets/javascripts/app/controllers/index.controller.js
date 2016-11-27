@@ -17,6 +17,7 @@
         $scope.cards = [];
         $scope.members = []
         $scope.cardsHelp = [];
+        $scope.lists = [];
         $scope.memberSelected = '';
         $scope.listSelected = '';
         Trello.authorize({
@@ -116,10 +117,12 @@
         }
 
         function refreshData(){
-            $scope.boards = [];
-            $scope.members = [];
-            $scope.lists = [];
             $scope.organizations = [];
+            $scope.boards = [];
+            $scope.cards = [];
+            $scope.lists = [];
+            $scope.members = []
+            $scope.cardsHelp = [];
         }
     }]);
 })();
