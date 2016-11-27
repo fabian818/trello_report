@@ -36,6 +36,7 @@
 
         $scope.getOrganizations = function(){
             refreshScopes();
+            refreshData();
             TrelloService.getOrganizations(Trello.token()).then(function(organizations){
                 $scope.boards = [];
                 console.log('organizations')
@@ -57,6 +58,15 @@
             });
         }
 
+        $scope.getBoards = function(){
+            refreshScopes();
+            refreshData();
+            TrelloService.getAllBoards(Trello.token()).then(function(boards){
+                console.log(boards.data);
+                $scope.boards = boards.data;
+            });
+        }
+
         $scope.getCards = function(boardId){
             refreshScopes();
             TrelloService.getCards(Trello.token(), boardId).then(function(data){
@@ -68,6 +78,11 @@
             TrelloService.getLists(Trello.token(), boardId).then(function(lists){
                 console.log(lists.data);
                 $scope.lists = lists.data;
+            });
+
+            TrelloService.getBoardMembers(Trello.token(), boardId).then(function(members){
+                console.log(members.data);
+                $scope.members = members.data;
             });
         }
 
@@ -98,6 +113,12 @@
         function refreshScopes(){
             $scope.memberSelected = '';
             $scope.listSelected = '';
+        }
+
+        function refreshData(){
+            $scope.boards = '';
+            $scope.members = '';
+            $scope.lists = '';
         }
     }]);
 })();

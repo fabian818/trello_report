@@ -6,6 +6,9 @@
       {{organization.name}}
     %button{'ng-click' => 'getBoards(organization.id)'} Get Boards
 
+
+%button{'ng-click' => 'getBoards()'} No organizations? Get Boards where i'm a member
+
 %h3{'ng-if' => 'boards.length > 0'}
   Boards
 %ol
