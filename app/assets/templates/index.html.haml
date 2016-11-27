@@ -6,22 +6,24 @@
       {{board.name}}
     %button{'ng-click' => 'getCards(board.id)'} Get Cards
 
-%h3
+%h3{'ng-if' => 'members.length > 0'}
   Members
 %ol
   %li{'ng-repeat' => 'member in members'}
-    {{member.fullName}} - {{member.username}}
-    %button{'ng-click' => 'setMember(member.id)'} SetMember
+    %span{'ng-class' => 'member.id === memberSelected.id ? "active" : "a"'}
+      {{member.fullName}} - {{member.username}}
+    %button{'ng-click' => 'setMember(member)'} SetMember
 
-%h3
+%h3{'ng-if' => 'lists.length > 0'}
   Lists
 %ol
   %li{'ng-repeat' => 'list in lists'}
-    {{list.name}} - {{list.id}}
-    %button{'ng-click' => 'setList(list.id)'} SetList
+    %span{'ng-class' => 'list.id === listSelected.id ? "active" : "a"'}
+      {{list.name}}
+    %button{'ng-click' => 'setList(list)'} SetList
 
 %h3{'ng-if' => 'cards.length > 0'}
   Cards
-%ol
-  %li{'ng-repeat' => 'card in cards'}
+%ul
+  %li{'ng-repeat' => 'card in cards| orderBy:"+dateLastActivity"'}
     {{card.name}}

@@ -16,8 +16,8 @@
         $scope.cards = [];
         $scope.members = []
         $scope.cardsHelp = [];
-        $scope.member = '';
-        $scope.list = '';
+        $scope.memberSelected = '';
+        $scope.listSelected = '';
         Trello.authorize({
             type: 'popup',
             name: 'wsnteam',
@@ -67,33 +67,33 @@
             });
         }
 
-        $scope.setMember = function(memberId){
-            $scope.member = memberId;
+        $scope.setMember = function(member){
+            $scope.memberSelected = member;
             filterCards();
         }
 
-        $scope.setList = function(listId){
-            $scope.list = listId;
+        $scope.setList = function(list){
+            $scope.listSelected = list;
             filterCards();
         }
 
         function filterCards(){
             $scope.cards = $scope.cardsHelp;
-            if ($scope.member !== '') {                
+            if ($scope.memberSelected !== '') {                
                 $scope.cards = $scope.cards.filter(function(n){
-                    return n.idMembers.includes($scope.member);
+                    return n.idMembers.includes($scope.memberSelected.id);
                 })
             }
-            if ($scope.list !== '') {                
+            if ($scope.listSelected !== '') {                
                 $scope.cards = $scope.cards.filter(function(n){
-                    return n.idList.includes($scope.list);
+                    return n.idList.includes($scope.listSelected.id);
                 })
             }
         }
 
         function refreshScopes(){
-            $scope.member = '';
-            $scope.list = '';
+            $scope.memberSelected = '';
+            $scope.listSelected = '';
         }
     }]);
 })();
