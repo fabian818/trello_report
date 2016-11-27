@@ -1,0 +1,21 @@
+{
+  "name": "trello_report",
+  "authors": [
+    "Fabian Pierre Peña Jacobo <f.pena.jacobo@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/assets/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "fetch": "^2.0.1"
+  }
+}
