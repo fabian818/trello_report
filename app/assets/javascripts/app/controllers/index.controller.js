@@ -1,14 +1,21 @@
 (function () {
     'use strict';
 
-    angular.module('myApp').controller('IndexController', ['$scope', 'TrelloService', function ($scope, TrelloService) {
-        $scope.ideas = []
-        $scope.ranking_ideas = []
-        $scope.new_idea = {
-            title: '',
-            solution: ''
+    Array.prototype.contains = function(obj) {
+        var i = this.length;
+        while (i--) {
+            if (this[i] === obj) {
+                return true;
+            }
         }
-        $scope.memberId = '';
+        return false;
+    }
+
+    angular.module('myApp').controller('IndexController', ['$scope', 'TrelloService', function ($scope, TrelloService) {
+        $scope.boards = [];
+        $scope.cards = [];
+        $scope.members = []
+        $scope.cardsHelp = [];
         Trello.authorize({
             type: 'popup',
             name: 'wsnteam',
@@ -26,40 +33,37 @@
         $scope.boards = [];
 
         $scope.getBoards = function(){
-            // console.log(Trello.organizations())
+
+            TrelloService.getOrganizations(Trello.token()).then(function(organizations){
+                console.log(organizations.data);
+                
+                var idOrganization =  organizations.data[1].id;
+                console.log(idOrganization);
+                TrelloService.getBoards(Trello.token()).then(function(boards){
+                    console.log(boards.data.filter(function(n){return n.idOrganization === idOrganization}));
+                    $scope.boards = boards.data.filter(function(n){return n.idOrganization === idOrganization});
+                });
+                TrelloService.getMembers(Trello.token(), idOrganization).then(function(members){
+                    console.log(members.data);
+                    $scope.members = members.data;
+                });
+            });            
             
-            TrelloService.getOrganizations(Trello.token()).then(function(data){
-                console.log(data.data[1].idBoards);
-                //$scope.memberId = data.data.id;
-                data.data[1].idBoards.forEach(function(element){
-                    console.log(element);
-                })
+        }
+
+        $scope.getCards = function(boardId){
+            TrelloService.getCards(Trello.token(), boardId).then(function(data){
+                console.log(data.data);
+                $scope.cards = data.data;
+                $scope.cardsHelp = data.data;
             });
         }
 
-        $scope.createBoard = function(){
-            LoadingService.showHide();
-            console.log('token user');
-            console.log(Trello.token());
-            $http({
-                method: 'POST',
-                // /1/members/[idMember or username]/boards
-                url: 'https://api.trello.com/1/boards',
-                data: {
-                    ame: $scope.idea.title,
-                    key: '28d1e5f62a4049c216bee203b0fcd1c2',
-                    token: Trello.token()
-                },
-                headers: {}
-            }).then(function successCallback(response) {
-                IdeaService.set_board($stateParams.idea_id, response.data.url, response.data.id).then(function(data){
-
-                });
-            }, function errorCallback(response) {
-
-                LoadingService.showHide();
-            });
-
+        $scope.setMemberCards = function(memberId){
+            $scope.cards = $scope.cardsHelp;
+            $scope.cards = $scope.cards.filter(function(n){
+                return n.idMembers.includes(memberId);
+            })
         }
     }]);
 })();
