@@ -5,10 +5,9 @@
     angular.module('myApp', ['LocalStorageModule',
         'ngRoute',
         'ui.router',
-        'ngAnimate',
         'templates'])
     .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
-        $httpProvider.interceptors.push('httpRequestInterceptor');
+        // $httpProvider.interceptors.push('httpRequestInterceptor');
         $stateProvider
         .state('index', {
             url: '/home',
@@ -17,7 +16,7 @@
             authenticate: true,
             revoke: false
         });
-        $urlRouterProvider.otherwise('/home');
+        //$urlRouterProvider.otherwise('/home');
 
         $locationProvider.html5Mode({
           enabled: true,

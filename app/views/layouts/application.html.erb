@@ -4,12 +4,12 @@
   <title>TrelloReport</title>
   <%= csrf_meta_tags %>
 
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_link_tag    'application', media: 'all'%>
+  <%= javascript_include_tag 'application' %>
   <script type="text/javascript" src="https://api.trello.com/1/client.js?key=28d1e5f62a4049c216bee203b0fcd1c2"></script>
 </head>
 
-<body>
-  <%= yield %>
+<body ng-app="myApp">
+  <div ui-view>asdasd</div>
 </body>
 </html>
