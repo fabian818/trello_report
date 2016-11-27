@@ -27,14 +27,18 @@
 
         $scope.getBoards = function(){
             // console.log(Trello.organizations())
-            
-            TrelloService.getOrganizations(Trello.token()).then(function(data){
-                console.log(data.data[1].idBoards);
-                //$scope.memberId = data.data.id;
-                data.data[1].idBoards.forEach(function(element){
-                    console.log(element);
-                })
+
+            TrelloService.getOrganizations(Trello.token()).then(function(organizations){
+                console.log(organizations.data);
+                
+                var idOrganization =  organizations.data[1].id;
+                console.log(idOrganization);
+                TrelloService.getBoards(Trello.token()).then(function(boards){
+                    console.log(boards.data.filter(function(n){return n.idOrganization === idOrganization}));                    
+                });
             });
+            
+            
         }
 
         $scope.createBoard = function(){
