@@ -12,12 +12,17 @@
     }
 
     angular.module('myApp').controller('IndexController', ['$scope', 'TrelloService', function ($scope, TrelloService) {
+        // scope arrays
         $scope.organizations = [];
         $scope.boards = [];
         $scope.cards = [];
         $scope.members = []
         $scope.cardsHelp = [];
         $scope.lists = [];
+
+        //scope selecteds
+        $scope.organizationSelected = '';
+        $scope.boardSelected = '';
         $scope.memberSelected = '';
         $scope.listSelected = '';
         $scope.token = '';
@@ -38,14 +43,15 @@
             });
         }
 
-        $scope.getBoards = function(organizationId){
+        $scope.getBoards = function(organization){
             refreshScopes();
-            TrelloService.getBoards($scope.token, organizationId).then(function(boards){
-                console.log(boards.data.filter(function(n){return n.idOrganization === organizationId}));
-                $scope.boards = boards.data.filter(function(n){return n.idOrganization === organizationId});
+            $scope.organizationSelected = organization;
+            TrelloService.getBoards($scope.token, organization.id).then(function(boards){
+                console.log(boards.data.filter(function(n){return n.idOrganization === organization.id}));
+                $scope.boards = boards.data.filter(function(n){return n.idOrganization === organization.id});
             });
 
-            TrelloService.getMembers($scope.token, organizationId).then(function(members){
+            TrelloService.getMembers($scope.token, organization.idOrganization).then(function(members){
                 console.log(members.data);
                 $scope.members = members.data;
             });
@@ -60,20 +66,21 @@
             });
         }
 
-        $scope.getCards = function(boardId){
+        $scope.getCards = function(board){
             refreshScopes();
-            TrelloService.getCards($scope.token, boardId).then(function(data){
+            $scope.boardSelected = board;
+            TrelloService.getCards($scope.token, board.id).then(function(data){
                 console.log(data.data);
                 $scope.cards = data.data;
                 $scope.cardsHelp = data.data;
             });
 
-            TrelloService.getLists($scope.token, boardId).then(function(lists){
+            TrelloService.getLists($scope.token, board.id).then(function(lists){
                 console.log(lists.data);
                 $scope.lists = lists.data;
             });
 
-            TrelloService.getBoardMembers($scope.token, boardId).then(function(members){
+            TrelloService.getBoardMembers($scope.token, board.id).then(function(members){
                 console.log(members.data);
                 $scope.members = members.data;
             });
