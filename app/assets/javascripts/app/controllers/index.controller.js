@@ -23,6 +23,10 @@
         $scope.token = '';
         loginTrello();
 
+        $scope.loginTrello = function(){
+            loginTrello();
+        }
+
         $scope.getOrganizations = function(){
             refreshScopes();
             refreshData();
@@ -114,21 +118,28 @@
         }
 
         function loginTrello(){
-            Trello.authorize({
+            Trello.authorize(
+            {
                 type: 'popup',
                 name: 'trello-report',
                 scope: {
                     read: 'true',
-                    write: 'true' },
-                    expiration: 'never',
-                    success: function(){
-                        console.log('Usuario autenticado');
-                        $scope.token = Trello.token();
-                    },
-                    error: function(){
-                        console.log('Usuario falló');
+                    write: 'true' 
+                },
+                expiration: 'never',
+                success: function(){
+                    console.log('Usuario autenticado');
+                    $scope.token = Trello.token();
+                    // thank's to GiancarlosIO
+                    if(!$scope.$$phase) {
+                        $scope.$apply()
                     }
-                });
+                    
+                },
+                error: function(){
+                    console.log('Usuario falló');
+                }
+            });
         }
     }]);
 })();

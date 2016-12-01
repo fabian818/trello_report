@@ -1,40 +1,44 @@
 %h1 TrelloReport - By NoFearCode
-%button{'ng-click' => 'getOrganizations()'} Get Organizations
-%button{'ng-click' => 'getAllBoards()'} No organizations? Get Boards where i'm a member
-%h3{'ng-if' => 'organizations.length > 0'}
-  Organizations
-%ol
-  %li{'ng-repeat' => 'organization in organizations'}
-    %a{'href' => '{{organization.url}}', 'target' => "_blank"}
-      {{organization.name}}
-    %button{'ng-click' => 'getBoards(organization.id)'} Get Boards
+.login{'ng-if' => 'token === ""'}
+  Make sure the popup is enabled in the browser at the top of the page
+  %button{'ng-click' => "loginTrello()"} Login in Trello
+.main{'ng-if' => 'token !== ""'}
+  %button{'ng-click' => 'getOrganizations()'} Get Organizations
+  %button{'ng-click' => 'getAllBoards()'} No organizations? Get Boards where i'm a member
+  %h3{'ng-if' => 'organizations.length > 0'}
+    Organizations
+  %ol
+    %li{'ng-repeat' => 'organization in organizations'}
+      %a{'href' => '{{organization.url}}', 'target' => "_blank"}
+        {{organization.name}}
+      %button{'ng-click' => 'getBoards(organization.id)'} Get Boards
 
-%h3{'ng-if' => 'boards.length > 0'}
-  Boards
-%ol
-  %li{'ng-repeat' => 'board in boards'}
-    %a{'href' => '{{board.url}}', 'target' => "_blank"}
-      {{board.name}}
-    %button{'ng-click' => 'getCards(board.id)'} Get Cards
+  %h3{'ng-if' => 'boards.length > 0'}
+    Boards
+  %ol
+    %li{'ng-repeat' => 'board in boards'}
+      %a{'href' => '{{board.url}}', 'target' => "_blank"}
+        {{board.name}}
+      %button{'ng-click' => 'getCards(board.id)'} Get Cards
 
-%h3{'ng-if' => 'members.length > 0'}
-  Members
-%ol
-  %li{'ng-repeat' => 'member in members'}
-    %span{'ng-class' => 'member.id === memberSelected.id ? "active" : "a"'}
-      {{member.fullName}} - {{member.username}}
-    %button{'ng-click' => 'setMember(member)'} SetMember
+  %h3{'ng-if' => 'members.length > 0'}
+    Members
+  %ol
+    %li{'ng-repeat' => 'member in members'}
+      %span{'ng-class' => 'member.id === memberSelected.id ? "active" : "a"'}
+        {{member.fullName}} - {{member.username}}
+      %button{'ng-click' => 'setMember(member)'} SetMember
 
-%h3{'ng-if' => 'lists.length > 0'}
-  Lists
-%ol
-  %li{'ng-repeat' => 'list in lists'}
-    %span{'ng-class' => 'list.id === listSelected.id ? "active" : "a"'}
-      {{list.name}}
-    %button{'ng-click' => 'setList(list)'} SetList
+  %h3{'ng-if' => 'lists.length > 0'}
+    Lists
+  %ol
+    %li{'ng-repeat' => 'list in lists'}
+      %span{'ng-class' => 'list.id === listSelected.id ? "active" : "a"'}
+        {{list.name}}
+      %button{'ng-click' => 'setList(list)'} SetList
 
-%h3{'ng-if' => 'cards.length > 0'}
-  Cards
-%ul
-  %li{'ng-repeat' => 'card in cards| orderBy:"+dateLastActivity"'}
-    {{card.name}}
+  %h3{'ng-if' => 'cards.length > 0'}
+    Cards
+  %ul
+    %li{'ng-repeat' => 'card in cards| orderBy:"+dateLastActivity"'}
+      {{card.name}}
