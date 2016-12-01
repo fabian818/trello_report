@@ -1,0 +1,57 @@
+@import 'modules/all';
+body{
+  background-color: $ocean;
+  font-family: $montserrat;
+  margin: 0;
+  // color: $dark-ocean;
+}
+
+nav{
+  display: inline-flex;
+  flex-direction: row;
+  min-height: 5em;
+  align-items: center;
+  min-width: 100%;
+  background-color: $dark-ocean;
+  justify-content:flex-end;
+  color: $white;
+  .logo{
+    margin-right:auto;
+    padding-left: 10px;
+    span{
+      &.name{
+        font-size: 27px;
+        font-weight: bold;
+      }
+    }
+  }
+  .options{
+    padding:5px;
+    padding-right: 10px;
+    span{
+      margin: 5px;
+    }
+    button{
+      margin: 5px;
+      background-color: $light-blue;
+      color: $white;
+      border-radius: 2px;
+      border: 0px;
+      cursor: pointer;
+      font-weight: bold;
+      &.large{
+        padding: 20px 30px 20px 30px;
+        text-transform: uppercase;
+        font-size: 15px;
+      }
+      &.small{
+        padding: 5px 10px 5px 10px;
+        font-size: 10px;
+      }  
+      &:hover{
+        background-color: $dark-blue;
+      }
+    }
+  }  
+}
+
