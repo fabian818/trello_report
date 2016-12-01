@@ -13,14 +13,14 @@
     %h3{'ng-if' => 'organizations.length > 0'}
       Organizations
     %ul
-      %li{'ng-repeat' => 'organization in organizations', 'ng-click' => 'getBoards(organization.id)'}
+      %li{'ng-repeat' => 'organization in organizations', 'ng-click' => 'getBoards(organization)', 'ng-class' => 'organization.id === organizationSelected.id ? "active" : "a"'}
         %span
           {{organization.name}}
   %article
     %h3{'ng-if' => 'boards.length > 0'}
       Boards
     %ul
-      %li{'ng-repeat' => 'board in boards', 'ng-click' => 'getCards(board.id)'}
+      %li{'ng-repeat' => 'board in boards', 'ng-click' => 'getCards(board)', 'ng-class' => 'board.id === boardSelected.id ? "active" : "a"'}
         %span
           {{board.name}}
   %article
@@ -40,6 +40,8 @@
           {{list.name}}
 
   %article
+    %h3{'ng-if' => 'cards.length === 0 && boardSelected !== ""'}
+      There aren't cards in this board (or filter).
     %h3{'ng-if' => 'cards.length > 0'}
       Cards
     %ul
