@@ -20,25 +20,13 @@
         $scope.lists = [];
         $scope.memberSelected = '';
         $scope.listSelected = '';
-        Trello.authorize({
-            type: 'popup',
-            name: 'wsnteam',
-            scope: {
-                read: 'true',
-                write: 'true' },
-                expiration: 'never',
-                success: function(){
-                    console.log('Usuario autenticado');
-                },
-                error: function(){
-                    console.log('Usuario falló');
-                }
-            });
+        $scope.token = '';
+        loginTrello();
 
         $scope.getOrganizations = function(){
             refreshScopes();
             refreshData();
-            TrelloService.getOrganizations(Trello.token()).then(function(organizations){
+            TrelloService.getOrganizations($scope.token).then(function(organizations){
                 $scope.boards = [];
                 console.log('organizations')
                 console.log(organizations.data);
@@ -48,12 +36,12 @@
 
         $scope.getBoards = function(organizationId){
             refreshScopes();
-            TrelloService.getBoards(Trello.token(), organizationId).then(function(boards){
+            TrelloService.getBoards($scope.token, organizationId).then(function(boards){
                 console.log(boards.data.filter(function(n){return n.idOrganization === organizationId}));
                 $scope.boards = boards.data.filter(function(n){return n.idOrganization === organizationId});
             });
 
-            TrelloService.getMembers(Trello.token(), organizationId).then(function(members){
+            TrelloService.getMembers($scope.token, organizationId).then(function(members){
                 console.log(members.data);
                 $scope.members = members.data;
             });
@@ -62,7 +50,7 @@
         $scope.getAllBoards = function(){
             refreshScopes();
             refreshData();
-            TrelloService.getAllBoards(Trello.token()).then(function(boards){
+            TrelloService.getAllBoards($scope.token).then(function(boards){
                 console.log(boards.data);
                 $scope.boards = boards.data;
             });
@@ -70,18 +58,18 @@
 
         $scope.getCards = function(boardId){
             refreshScopes();
-            TrelloService.getCards(Trello.token(), boardId).then(function(data){
+            TrelloService.getCards($scope.token, boardId).then(function(data){
                 console.log(data.data);
                 $scope.cards = data.data;
                 $scope.cardsHelp = data.data;
             });
 
-            TrelloService.getLists(Trello.token(), boardId).then(function(lists){
+            TrelloService.getLists($scope.token, boardId).then(function(lists){
                 console.log(lists.data);
                 $scope.lists = lists.data;
             });
 
-            TrelloService.getBoardMembers(Trello.token(), boardId).then(function(members){
+            TrelloService.getBoardMembers($scope.token, boardId).then(function(members){
                 console.log(members.data);
                 $scope.members = members.data;
             });
@@ -123,6 +111,24 @@
             $scope.lists = [];
             $scope.members = []
             $scope.cardsHelp = [];
+        }
+
+        function loginTrello(){
+            Trello.authorize({
+                type: 'popup',
+                name: 'trello-report',
+                scope: {
+                    read: 'true',
+                    write: 'true' },
+                    expiration: 'never',
+                    success: function(){
+                        console.log('Usuario autenticado');
+                        $scope.token = Trello.token();
+                    },
+                    error: function(){
+                        console.log('Usuario falló');
+                    }
+                });
         }
     }]);
 })();
