@@ -28,6 +28,10 @@
         $scope.token = '';
         loginTrello();
 
+        $scope.scroll = function($event){
+            window.scrollTo(0, $event.currentTarget.scrollHeight - 100);
+        }
+
         $scope.loginTrello = function(){
             loginTrello();
         }
@@ -62,7 +66,7 @@
             refreshData();
             TrelloService.getAllBoards($scope.token).then(function(boards){
                 console.log(boards.data);
-                $scope.boards = boards.data;
+                $scope.boards = boards.data.filter(function(n){return n.closed === false});
             });
         }
 

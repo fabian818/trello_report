@@ -27,7 +27,7 @@
     .left
       %h3
         Members
-      .dropdown
+      .dropdown{'ng-mouseover' => 'scroll($event)'}
         .element
           %span{'ng-if' => 'memberSelected === ""'}
             Member to filter
@@ -40,7 +40,7 @@
     .right
       %h3
         Lists
-      .dropdown
+      .dropdown{'ng-mouseover' => 'scroll($event)'}
         .element
           %span{'ng-if' => 'listSelected === ""'}
             List to filter
