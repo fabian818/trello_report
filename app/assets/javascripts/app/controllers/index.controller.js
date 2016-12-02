@@ -29,7 +29,7 @@
         loginTrello();
 
         $scope.scroll = function($event){
-            window.scrollTo(0, $event.currentTarget.scrollHeight - 100);
+            window.scrollTo(window.pageXOffset, target.scrollHeight - 100);
         }
 
         $scope.loginTrello = function(){
