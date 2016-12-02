@@ -2,28 +2,90 @@
 
 .main{
   display: flex;
-  padding: 10px;
+  position: relative;
+  top: 5em;
   flex-flow: column;
+  & > article:nth-of-type(odd) {
+    background-color: $ocean;
+  }
   article{
+    padding: 10px;
     color: $white;
     flex: auto;
-    ul{
+    &.filters{ 
       display: flex;
-      list-style: none;
-      padding: 20px;
-      li{
-        text-align: center;
-        border-radius: 3px;
-        flex: 3;
-        margin-right: 20px;
-        padding: 30px 40px 30px 40px;
-        background-color: $dark-blue;
-        cursor: pointer;
-        &:hover{
-          background-color: $dark-ocean;
+      div{
+        flex: 0 1 50%;
+        .dropdown{
+          padding:  0px 0px 20px 20px;
+          position: relative;
+          width: 80%;
+          cursor: pointer;
+          .element{
+            padding: 20px 30px 20px 30px;
+            background-color: $dark-blue;
+            border-radius: 3px;
+            i{              
+              float: right;
+            }
+          }
+          .content{
+            padding-left: 0px;
+            padding-right: 0px;
+            width: 100%;
+            display: none; 
+            position: absolute;
+            .element{
+              padding: 20px 30px 20px 30px;
+              background-color: $dark-blue;
+              border-radius: 3px;
+              &:hover{
+                background-color: $dark-ocean;
+              }
+            }
+          }
+          &:hover{
+            .content{
+              display: block;
+            }
+          }
         }
-        &.active{
-          background-color: $dark-ocean;
+      }
+    }
+    &.cards{
+      padding: 20px 30px 20px 30px;
+      ul{
+        list-style: none;
+        li{
+          padding: 20px;
+        }
+        & > li:nth-of-type(odd) {
+          background-color: $ocean;
+        }
+        & > li:nth-of-type(even) {
+          background-color: $light-blue;
+        }
+      }
+    }
+    &.normal{
+      ul{
+        display: flex;
+        list-style: none;
+        padding: 20px;
+        li{
+          text-align: center;
+          border-radius: 3px;
+          flex: 3;
+          margin-right: 20px;
+          padding: 30px 40px 30px 40px;
+          background-color: $dark-blue;
+          cursor: pointer;
+          &:hover{
+            background-color: $dark-ocean;
+          }
+          &.active{
+            background-color: $dark-ocean;
+          }
         }
       }
     }
