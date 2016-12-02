@@ -1,17 +1,22 @@
 @import 'modules/all';
 body{
-  background-color: $ocean;
+  background-color: $light-blue;
   font-family: $montserrat;
   margin: 0;
   // color: $dark-ocean;
 }
 
 nav{
+  margin: 0; 
+  position: fixed;
+  top: 0;
+  z-index: 99;
   display: inline-flex;
   flex-direction: row;
   min-height: 5em;
   align-items: center;
   min-width: 100%;
+  -webkit-flex-flow: row wrap;
   background-color: $dark-ocean;
   justify-content:flex-end;
   color: $white;

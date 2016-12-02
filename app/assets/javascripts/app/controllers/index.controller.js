@@ -51,7 +51,7 @@
                 $scope.boards = boards.data.filter(function(n){return n.idOrganization === organization.id});
             });
 
-            TrelloService.getMembers($scope.token, organization.idOrganization).then(function(members){
+            TrelloService.getMembers($scope.token, organization.id).then(function(members){
                 console.log(members.data);
                 $scope.members = members.data;
             });

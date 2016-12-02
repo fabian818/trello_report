@@ -9,37 +9,48 @@
     %button.large{'ng-click' => 'getOrganizations()'} Get Organizations
     %button.large{'ng-click' => 'getAllBoards()'} No organizations? Get Boards where i'm a member
 .main
-  %article
-    %h3{'ng-if' => 'organizations.length > 0'}
+  %article.normal{'ng-if' => 'organizations.length > 0'}
+    %h3
       Organizations
     %ul
       %li{'ng-repeat' => 'organization in organizations', 'ng-click' => 'getBoards(organization)', 'ng-class' => 'organization.id === organizationSelected.id ? "active" : "a"'}
         %span
           {{organization.name}}
-  %article
-    %h3{'ng-if' => 'boards.length > 0'}
+  %article.normal{'ng-if' => 'boards.length > 0'}
+    %h3
       Boards
     %ul
       %li{'ng-repeat' => 'board in boards', 'ng-click' => 'getCards(board)', 'ng-class' => 'board.id === boardSelected.id ? "active" : "a"'}
         %span
           {{board.name}}
-  %article
-    %h3{'ng-if' => 'members.length > 0'}
-      Members
-    %ul
-      %li{'ng-repeat' => 'member in members', 'ng-click' => 'setMember(member)', 'ng-class' => 'member.id === memberSelected.id ? "active" : "a"'}
-        %span
-          {{member.fullName}} - {{member.username}}
-
-  %article
-    %h3{'ng-if' => 'lists.length > 0'}
-      Lists
-    %ul
-      %li{'ng-repeat' => 'list in lists', 'ng-click' => 'setList(list)', 'ng-class' => 'list.id === listSelected.id ? "active" : "a"'}
-        %span
-          {{list.name}}
-
-  %article
+  %article.normal.filters{'ng-if' => 'members.length > 0 && lists.length > 0'}
+    .left
+      %h3
+        Members
+      .dropdown
+        .element
+          %span{'ng-if' => 'memberSelected === ""'}
+            Member to filter
+          %span{'ng-if' => 'memberSelected !== ""'}
+            {{memberSelected.fullName}}
+          %i.fa.fa-arrow-down   
+        .content
+          .element{'ng-repeat' => 'member in members', 'ng-click' => 'setMember(member)'} 
+            {{member.fullName}} - {{member.username}}
+    .right
+      %h3
+        Lists
+      .dropdown
+        .element
+          %span{'ng-if' => 'listSelected === ""'}
+            List to filter
+          %span{'ng-if' => 'listSelected !== ""'}
+            {{listSelected.name}}
+          %i.fa.fa-arrow-down   
+        .content
+          .element{'ng-repeat' => 'list in lists', 'ng-click' => 'setList(list)'} 
+            {{list.name}}
+  %article.cards{'ng-if' => 'boardSelected !== ""'}
     %h3{'ng-if' => 'cards.length === 0 && boardSelected !== ""'}
       There aren't cards in this board (or filter).
     %h3{'ng-if' => 'cards.length > 0'}
