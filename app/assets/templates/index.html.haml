@@ -10,15 +10,25 @@
     %button.large{'ng-click' => 'getAllBoards()'} No organizations? Get Boards where i'm a member
 .main
   %article.normal{'ng-if' => 'organizations.length > 0'}
-    %h3
-      Organizations
+    .title
+      %h3
+        Organizations
+      .toggle{'ng-click' => 'toggle($event)'}
+        %span
+          Hide
+        %i.fa.fa-chevron-up
     %ul
       %li{'ng-repeat' => 'organization in organizations', 'ng-click' => 'getBoards(organization)', 'ng-class' => 'organization.id === organizationSelected.id ? "active" : "a"'}
         %span
           {{organization.name}}
   %article.normal{'ng-if' => 'boards.length > 0'}
-    %h3
-      Boards
+    .title
+      %h3
+        Boards
+      .toggle{'ng-click' => 'toggle($event)'}
+        %span
+          Hide
+        %i.fa.fa-chevron-up
     %ul
       %li{'ng-repeat' => 'board in boards', 'ng-click' => 'getCards(board)', 'ng-class' => 'board.id === boardSelected.id ? "active" : "a"'}
         %span

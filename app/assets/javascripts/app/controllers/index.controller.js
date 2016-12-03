@@ -32,6 +32,25 @@
             window.scrollTo(window.pageXOffset, $event.currentTarget.scrollHeight - 100);
         }
 
+        $scope.toggle = function($event){
+            var ul = $($event.currentTarget).parent().parent().find('ul');
+            var span = $($event.currentTarget).find('span');
+            var i = $($event.currentTarget).find('i');
+            console.log(ul.css('display'))
+            if (ul.css('display') === 'none') {
+                ul.css('display', 'flex');
+                span.html('Hide');
+                i.removeClass('fa-chevron-down');
+                i.addClass('fa-chevron-up');
+            }
+            else{
+                ul.css('display', 'none');
+                span.html('Show');
+                i.removeClass('fa-chevron-up');
+                i.addClass('fa-chevron-down');
+            }            
+        }
+
         $scope.loginTrello = function(){
             loginTrello();
         }
@@ -129,8 +148,7 @@
         }
 
         function loginTrello(){
-            Trello.authorize(
-            {
+            Trello.authorize({
                 type: 'popup',
                 name: 'trello-report',
                 scope: {
