@@ -69,6 +69,19 @@
       }
     }
     &.normal{
+      .title{
+        display: inline-flex;
+        align-items: center;
+        .toggle{
+          margin-left: 20px;
+          padding: 7px;
+          border-radius: 2px;
+          border-color: $white;
+          border-width: 2px;
+          border-style: solid;
+          cursor: pointer;
+        }
+      }
       ul{
         display: flex;
         list-style: none;
